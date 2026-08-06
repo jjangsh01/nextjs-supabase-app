@@ -3,27 +3,20 @@
 import { cn } from "@/lib/utils";
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { GoogleIcon } from "@/components/google-icon";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-export function LoginForm({
-  className,
-  ...props
-}: React.ComponentPropsWithoutRef<"div">) {
+export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRef<"div">) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isGoogleLoading, setIsGoogleLoading] = useState(false);
   const router = useRouter();
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -47,14 +40,31 @@ export function LoginForm({
     }
   };
 
+  const handleGoogleLogin = async () => {
+    const supabase = createClient();
+    setIsGoogleLoading(true);
+    setError(null);
+
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo: `${window.location.origin}/auth/callback`,
+        },
+      });
+      if (error) throw error;
+    } catch (error: unknown) {
+      setError(error instanceof Error ? error.message : "An error occurred");
+      setIsGoogleLoading(false);
+    }
+  };
+
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
         <CardHeader>
           <CardTitle className="text-2xl">Login</CardTitle>
-          <CardDescription>
-            Enter your email below to login to your account
-          </CardDescription>
+          <CardDescription>Enter your email below to login to your account</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleLogin}>
@@ -89,16 +99,31 @@ export function LoginForm({
                 />
               </div>
               {error && <p className="text-sm text-red-500">{error}</p>}
-              <Button type="submit" className="w-full" disabled={isLoading}>
+              <Button type="submit" className="w-full" disabled={isLoading || isGoogleLoading}>
                 {isLoading ? "Logging in..." : "Login"}
               </Button>
             </div>
+            <div className="relative my-4">
+              <div className="absolute inset-0 flex items-center">
+                <span className="w-full border-t" />
+              </div>
+              <div className="relative flex justify-center text-xs uppercase">
+                <span className="bg-card px-2 text-muted-foreground">Or</span>
+              </div>
+            </div>
+            <Button
+              type="button"
+              variant="outline"
+              className="w-full"
+              disabled={isLoading || isGoogleLoading}
+              onClick={handleGoogleLogin}
+            >
+              <GoogleIcon className="size-4" />
+              {isGoogleLoading ? "Redirecting..." : "Continue with Google"}
+            </Button>
             <div className="mt-4 text-center text-sm">
               Don&apos;t have an account?{" "}
-              <Link
-                href="/auth/sign-up"
-                className="underline underline-offset-4"
-              >
+              <Link href="/auth/sign-up" className="underline underline-offset-4">
                 Sign up
               </Link>
             </div>

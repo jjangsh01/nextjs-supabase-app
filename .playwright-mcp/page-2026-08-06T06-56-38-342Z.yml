@@ -1,0 +1,40 @@
+- generic [ref=f3e1]:
+  - generic [ref=f3e3]:
+    - generic [ref=f3e4]:
+      - generic [ref=f3e6]:
+        - generic [ref=f3e7]: 로드 중
+        - progressbar [ref=f3e8]
+      - main [ref=f3e15]:
+        - generic [ref=f3e16]:
+          - generic [ref=f3e17]: Google 계정으로 로그인
+          - generic [ref=f3e23]:
+            - heading "로그인" [level=1] [ref=f3e24]
+            - generic [ref=f3e26]:
+              - button "mwqxggsotrzrzpgmtdoj.supabase.co" [ref=f3e27] [cursor=pointer]
+              - text: (으)로 이동
+        - generic [ref=f3e35]:
+          - generic [ref=f3e40]:
+            - textbox "이메일 또는 휴대전화" [active] [ref=f3e41]
+            - generic: 이메일 또는 휴대전화
+          - button "이메일을 잊으셨나요?" [ref=f3e45] [cursor=pointer]
+        - generic [ref=f3e47]:
+          - button "다음" [ref=f3e51]
+          - button "계정 만들기" [ref=f3e59]
+    - contentinfo [ref=f3e66]:
+      - combobox "언어 변경 한국어" [ref=f3e70] [cursor=pointer]:
+        - generic: 한국어
+      - list [ref=f3e72]:
+        - listitem [ref=f3e73]:
+          - link "Google 계정 고객센터 열기(외부, 새 창에서 열림)" [ref=f3e74] [cursor=pointer]:
+            - /url: https://support.google.com/accounts?hl=ko&p=account_iph
+            - text: 도움말
+        - listitem [ref=f3e75]:
+          - link "개인정보처리방침(외부, 새 창에서 열림)" [ref=f3e76] [cursor=pointer]:
+            - /url: https://accounts.google.com/TOS?loc=KR&hl=ko&privacy=true
+            - text: 개인정보처리방침
+        - listitem [ref=f3e77]:
+          - link "Google 서비스 약관(외부, 새 창에서 열림)" [ref=f3e78] [cursor=pointer]:
+            - /url: https://accounts.google.com/TOS?loc=KR&hl=ko
+            - text: 약관
+  - iframe [ref=f3e79]:
+    
